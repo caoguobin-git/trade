@@ -1,0 +1,30 @@
+<!DOCTYPE HTML>
+<!--suppress ALL-->
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>hello</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+<p th:text="'Hello！, ' + ${username} + '!'"></p>
+<div>
+    <table>
+        <tr>
+            <td>id</td>
+            <td>国家</td>
+            <td>内容</td>
+        </tr>
+        <tr th:each="emp : ${economicsBody}">
+            <td th:text="${emp.id}"></td>
+            <td th:text="${emp.country}"></td>
+            <td th:text="${emp.name}" th:onclick="hello()"></td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>
+<script>
+    function hello(e) {
+            console.log(this)
+    }
+</script>

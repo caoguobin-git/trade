@@ -1,0 +1,1158 @@
+<!DOCTYPE HTML>
+<!--suppress ALL-->
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>
+        hello</title>
+    <meta http-equiv="Content-Type"
+          content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet"
+          type="text/css"
+          href="/bootstrap-3.3.7-dist/css/bootstrap.css">
+    <script src="/js/jquery-3.4.1.js"></script>
+
+    <style>
+        #marketdatas{
+            border-spacing: 2px 5px;
+        }
+        #marketdatas th, td {
+            text-align: center;
+            padding: 2px 5px;
+            border-bottom: 0.5px solid gray;
+            border-top: 0.5px solid gray;
+            border-radius: 3px;
+        }
+
+        #marketdatas tr:hover {
+            background: rgba(230, 230, 230, 0.6);
+        }
+    </style>
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="row">
+                <table id="marketdatas">
+                    <tr>
+                        <th>
+                            商品组合
+                        </th>
+                        <th>
+                            卖出
+                        </th>
+                        <th>
+                            买入
+                        </th>
+                        <th>
+                            点差
+                        </th>
+                        <th>
+                            变化
+                        </th>
+                        <th>
+                            最高价
+                        </th>
+                        <th>
+                            最低价
+                        </th>
+                        <th>
+                            卖出利息
+                        </th>
+                        <th>
+                            买入利息
+                        </th>
+                        <th>
+                            每点价值
+                        </th>
+                        <th>
+                            保证金要求
+                        </th>
+                        <th>
+                            时间
+                        </th>
+                    </tr>
+                    <tr id="NZDCAD">
+                        <td class="marketdata-symbol">
+                            NZDCAD
+                        </td>
+                        <td class="marketdata-sell-price"></td>
+                        <td class="marketdata-buy-price"></td>
+                        <td class="marketdata-spread"></td>
+                        <td class="marketdata-change"></td>
+                        <td class="marketdata-high"></td>
+                        <td class="marketdata-low"></td>
+                        <td class="marketdata-roll-sell"></td>
+                        <td class="marketdata-roll-buy"></td>
+                        <td class="marketdata-pip-cost"></td>
+                        <td class="marketdata-margin"></td>
+                        <td class="marketdata-time"></td>
+                    </tr>
+                    <tr id="USOil">
+                        <td class="marketdata-symbol">
+                            USOil
+                        </td>
+                        <td class="marketdata-sell-price"></td>
+                        <td class="marketdata-buy-price"></td>
+                        <td class="marketdata-spread"></td>
+                        <td class="marketdata-change"></td>
+                        <td class="marketdata-high"></td>
+                        <td class="marketdata-low"></td>
+                        <td class="marketdata-roll-sell"></td>
+                        <td class="marketdata-roll-buy"></td>
+                        <td class="marketdata-pip-cost"></td>
+                        <td class="marketdata-margin"></td>
+                        <td class="marketdata-time"></td>
+                    </tr>
+                    <tr id="EURNZD">
+                        <td class="marketdata-symbol">
+                            EURNZD
+                        </td>
+                        <td class="marketdata-sell-price"></td>
+                        <td class="marketdata-buy-price"></td>
+                        <td class="marketdata-spread"></td>
+                        <td class="marketdata-change"></td>
+                        <td class="marketdata-high"></td>
+                        <td class="marketdata-low"></td>
+                        <td class="marketdata-roll-sell"></td>
+                        <td class="marketdata-roll-buy"></td>
+                        <td class="marketdata-pip-cost"></td>
+                        <td class="marketdata-margin"></td>
+                        <td class="marketdata-time"></td>
+                    </tr>
+                    <tr id="AUS200">
+                        <td class="marketdata-symbol">
+                            AUS200
+                        </td>
+                        <td class="marketdata-sell-price"></td>
+                        <td class="marketdata-buy-price"></td>
+                        <td class="marketdata-spread"></td>
+                        <td class="marketdata-change"></td>
+                        <td class="marketdata-high"></td>
+                        <td class="marketdata-low"></td>
+                        <td class="marketdata-roll-sell"></td>
+                        <td class="marketdata-roll-buy"></td>
+                        <td class="marketdata-pip-cost"></td>
+                        <td class="marketdata-margin"></td>
+                        <td class="marketdata-time"></td>
+                    </tr>
+                    <tr id="EURCHF">
+                        <td class="marketdata-symbol">
+                            EURCHF
+                        </td>
+                        <td class="marketdata-sell-price"></td>
+                        <td class="marketdata-buy-price"></td>
+                        <td class="marketdata-spread"></td>
+                        <td class="marketdata-change"></td>
+                        <td class="marketdata-high"></td>
+                        <td class="marketdata-low"></td>
+                        <td class="marketdata-roll-sell"></td>
+                        <td class="marketdata-roll-buy"></td>
+                        <td class="marketdata-pip-cost"></td>
+                        <td class="marketdata-margin"></td>
+                        <td class="marketdata-time"></td>
+                    </tr>
+                    <tr id="UKOil">
+                        <td class="marketdata-symbol">
+                            UKOil
+                        </td>
+                        <td class="marketdata-sell-price"></td>
+                        <td class="marketdata-buy-price"></td>
+                        <td class="marketdata-spread"></td>
+                        <td class="marketdata-change"></td>
+                        <td class="marketdata-high"></td>
+                        <td class="marketdata-low"></td>
+                        <td class="marketdata-roll-sell"></td>
+                        <td class="marketdata-roll-buy"></td>
+                        <td class="marketdata-pip-cost"></td>
+                        <td class="marketdata-margin"></td>
+                        <td class="marketdata-time"></td>
+                    </tr>
+                    <tr id="USDJPY">
+                        <td class="marketdata-symbol">
+                            USDJPY
+                        </td>
+                        <td class="marketdata-sell-price"></td>
+                        <td class="marketdata-buy-price"></td>
+                        <td class="marketdata-spread"></td>
+                        <td class="marketdata-change"></td>
+                        <td class="marketdata-high"></td>
+                        <td class="marketdata-low"></td>
+                        <td class="marketdata-roll-sell"></td>
+                        <td class="marketdata-roll-buy"></td>
+                        <td class="marketdata-pip-cost"></td>
+                        <td class="marketdata-margin"></td>
+                        <td class="marketdata-time"></td>
+                    </tr>
+                    <tr id="EUSTX50">
+                        <td class="marketdata-symbol">
+                            EUSTX50
+                        </td>
+                        <td class="marketdata-sell-price"></td>
+                        <td class="marketdata-buy-price"></td>
+                        <td class="marketdata-spread"></td>
+                        <td class="marketdata-change"></td>
+                        <td class="marketdata-high"></td>
+                        <td class="marketdata-low"></td>
+                        <td class="marketdata-roll-sell"></td>
+                        <td class="marketdata-roll-buy"></td>
+                        <td class="marketdata-pip-cost"></td>
+                        <td class="marketdata-margin"></td>
+                        <td class="marketdata-time"></td>
+                    </tr>
+                    <tr id="CADCHF">
+                        <td class="marketdata-symbol">
+                            CADCHF
+                        </td>
+                        <td class="marketdata-sell-price"></td>
+                        <td class="marketdata-buy-price"></td>
+                        <td class="marketdata-spread"></td>
+                        <td class="marketdata-change"></td>
+                        <td class="marketdata-high"></td>
+                        <td class="marketdata-low"></td>
+                        <td class="marketdata-roll-sell"></td>
+                        <td class="marketdata-roll-buy"></td>
+                        <td class="marketdata-pip-cost"></td>
+                        <td class="marketdata-margin"></td>
+                        <td class="marketdata-time"></td>
+                    </tr>
+                    <tr id="EURUSD">
+                        <td class="marketdata-symbol">
+                            EURUSD
+                        </td>
+                        <td class="marketdata-sell-price"></td>
+                        <td class="marketdata-buy-price"></td>
+                        <td class="marketdata-spread"></td>
+                        <td class="marketdata-change"></td>
+                        <td class="marketdata-high"></td>
+                        <td class="marketdata-low"></td>
+                        <td class="marketdata-roll-sell"></td>
+                        <td class="marketdata-roll-buy"></td>
+                        <td class="marketdata-pip-cost"></td>
+                        <td class="marketdata-margin"></td>
+                        <td class="marketdata-time"></td>
+                    </tr>
+                    <tr id="GER30">
+                        <td class="marketdata-symbol">
+                            GER30
+                        </td>
+                        <td class="marketdata-sell-price"></td>
+                        <td class="marketdata-buy-price"></td>
+                        <td class="marketdata-spread"></td>
+                        <td class="marketdata-change"></td>
+                        <td class="marketdata-high"></td>
+                        <td class="marketdata-low"></td>
+                        <td class="marketdata-roll-sell"></td>
+                        <td class="marketdata-roll-buy"></td>
+                        <td class="marketdata-pip-cost"></td>
+                        <td class="marketdata-margin"></td>
+                        <td class="marketdata-time"></td>
+                    </tr>
+                    <tr id="GBPUSD">
+                        <td class="marketdata-symbol">
+                            GBPUSD
+                        </td>
+                        <td class="marketdata-sell-price"></td>
+                        <td class="marketdata-buy-price"></td>
+                        <td class="marketdata-spread"></td>
+                        <td class="marketdata-change"></td>
+                        <td class="marketdata-high"></td>
+                        <td class="marketdata-low"></td>
+                        <td class="marketdata-roll-sell"></td>
+                        <td class="marketdata-roll-buy"></td>
+                        <td class="marketdata-pip-cost"></td>
+                        <td class="marketdata-margin"></td>
+                        <td class="marketdata-time"></td>
+                    </tr>
+                    <tr id="LTCUSD">
+                        <td class="marketdata-symbol">
+                            LTCUSD
+                        </td>
+                        <td class="marketdata-sell-price"></td>
+                        <td class="marketdata-buy-price"></td>
+                        <td class="marketdata-spread"></td>
+                        <td class="marketdata-change"></td>
+                        <td class="marketdata-high"></td>
+                        <td class="marketdata-low"></td>
+                        <td class="marketdata-roll-sell"></td>
+                        <td class="marketdata-roll-buy"></td>
+                        <td class="marketdata-pip-cost"></td>
+                        <td class="marketdata-margin"></td>
+                        <td class="marketdata-time"></td>
+                    </tr>
+                    <tr id="NAS100">
+                        <td class="marketdata-symbol">
+                            NAS100
+                        </td>
+                        <td class="marketdata-sell-price"></td>
+                        <td class="marketdata-buy-price"></td>
+                        <td class="marketdata-spread"></td>
+                        <td class="marketdata-change"></td>
+                        <td class="marketdata-high"></td>
+                        <td class="marketdata-low"></td>
+                        <td class="marketdata-roll-sell"></td>
+                        <td class="marketdata-roll-buy"></td>
+                        <td class="marketdata-pip-cost"></td>
+                        <td class="marketdata-margin"></td>
+                        <td class="marketdata-time"></td>
+                    </tr>
+                    <tr id="ZARJPY">
+                        <td class="marketdata-symbol">
+                            ZARJPY
+                        </td>
+                        <td class="marketdata-sell-price"></td>
+                        <td class="marketdata-buy-price"></td>
+                        <td class="marketdata-spread"></td>
+                        <td class="marketdata-change"></td>
+                        <td class="marketdata-high"></td>
+                        <td class="marketdata-low"></td>
+                        <td class="marketdata-roll-sell"></td>
+                        <td class="marketdata-roll-buy"></td>
+                        <td class="marketdata-pip-cost"></td>
+                        <td class="marketdata-margin"></td>
+                        <td class="marketdata-time"></td>
+                    </tr>
+                    <tr id="NZDCHF">
+                        <td class="marketdata-symbol">
+                            NZDCHF
+                        </td>
+                        <td class="marketdata-sell-price"></td>
+                        <td class="marketdata-buy-price"></td>
+                        <td class="marketdata-spread"></td>
+                        <td class="marketdata-change"></td>
+                        <td class="marketdata-high"></td>
+                        <td class="marketdata-low"></td>
+                        <td class="marketdata-roll-sell"></td>
+                        <td class="marketdata-roll-buy"></td>
+                        <td class="marketdata-pip-cost"></td>
+                        <td class="marketdata-margin"></td>
+                        <td class="marketdata-time"></td>
+                    </tr>
+                    <tr id="USDCNH">
+                        <td class="marketdata-symbol">
+                            USDCNH
+                        </td>
+                        <td class="marketdata-sell-price"></td>
+                        <td class="marketdata-buy-price"></td>
+                        <td class="marketdata-spread"></td>
+                        <td class="marketdata-change"></td>
+                        <td class="marketdata-high"></td>
+                        <td class="marketdata-low"></td>
+                        <td class="marketdata-roll-sell"></td>
+                        <td class="marketdata-roll-buy"></td>
+                        <td class="marketdata-pip-cost"></td>
+                        <td class="marketdata-margin"></td>
+                        <td class="marketdata-time"></td>
+                    </tr>
+                    <tr id="EURTRY">
+                        <td class="marketdata-symbol">
+                            EURTRY
+                        </td>
+                        <td class="marketdata-sell-price"></td>
+                        <td class="marketdata-buy-price"></td>
+                        <td class="marketdata-spread"></td>
+                        <td class="marketdata-change"></td>
+                        <td class="marketdata-high"></td>
+                        <td class="marketdata-low"></td>
+                        <td class="marketdata-roll-sell"></td>
+                        <td class="marketdata-roll-buy"></td>
+                        <td class="marketdata-pip-cost"></td>
+                        <td class="marketdata-margin"></td>
+                        <td class="marketdata-time"></td>
+                    </tr>
+                    <tr id="AUDCAD">
+                        <td class="marketdata-symbol">
+                            AUDCAD
+                        </td>
+                        <td class="marketdata-sell-price"></td>
+                        <td class="marketdata-buy-price"></td>
+                        <td class="marketdata-spread"></td>
+                        <td class="marketdata-change"></td>
+                        <td class="marketdata-high"></td>
+                        <td class="marketdata-low"></td>
+                        <td class="marketdata-roll-sell"></td>
+                        <td class="marketdata-roll-buy"></td>
+                        <td class="marketdata-pip-cost"></td>
+                        <td class="marketdata-margin"></td>
+                        <td class="marketdata-time"></td>
+                    </tr>
+                    <tr id="USDSEK">
+                        <td class="marketdata-symbol">
+                            USDSEK
+                        </td>
+                        <td class="marketdata-sell-price"></td>
+                        <td class="marketdata-buy-price"></td>
+                        <td class="marketdata-spread"></td>
+                        <td class="marketdata-change"></td>
+                        <td class="marketdata-high"></td>
+                        <td class="marketdata-low"></td>
+                        <td class="marketdata-roll-sell"></td>
+                        <td class="marketdata-roll-buy"></td>
+                        <td class="marketdata-pip-cost"></td>
+                        <td class="marketdata-margin"></td>
+                        <td class="marketdata-time"></td>
+                    </tr>
+                    <tr id="GBPJPY">
+                        <td class="marketdata-symbol">
+                            GBPJPY
+                        </td>
+                        <td class="marketdata-sell-price"></td>
+                        <td class="marketdata-buy-price"></td>
+                        <td class="marketdata-spread"></td>
+                        <td class="marketdata-change"></td>
+                        <td class="marketdata-high"></td>
+                        <td class="marketdata-low"></td>
+                        <td class="marketdata-roll-sell"></td>
+                        <td class="marketdata-roll-buy"></td>
+                        <td class="marketdata-pip-cost"></td>
+                        <td class="marketdata-margin"></td>
+                        <td class="marketdata-time"></td>
+                    </tr>
+                    <tr id="FRA40">
+                        <td class="marketdata-symbol">
+                            FRA40
+                        </td>
+                        <td class="marketdata-sell-price"></td>
+                        <td class="marketdata-buy-price"></td>
+                        <td class="marketdata-spread"></td>
+                        <td class="marketdata-change"></td>
+                        <td class="marketdata-high"></td>
+                        <td class="marketdata-low"></td>
+                        <td class="marketdata-roll-sell"></td>
+                        <td class="marketdata-roll-buy"></td>
+                        <td class="marketdata-pip-cost"></td>
+                        <td class="marketdata-margin"></td>
+                        <td class="marketdata-time"></td>
+                    </tr>
+                    <tr id="USDOLLAR">
+                        <td class="marketdata-symbol">
+                            USDOLLAR
+                        </td>
+                        <td class="marketdata-sell-price"></td>
+                        <td class="marketdata-buy-price"></td>
+                        <td class="marketdata-spread"></td>
+                        <td class="marketdata-change"></td>
+                        <td class="marketdata-high"></td>
+                        <td class="marketdata-low"></td>
+                        <td class="marketdata-roll-sell"></td>
+                        <td class="marketdata-roll-buy"></td>
+                        <td class="marketdata-pip-cost"></td>
+                        <td class="marketdata-margin"></td>
+                        <td class="marketdata-time"></td>
+                    </tr>
+                    <tr id="ESP35">
+                        <td class="marketdata-symbol">
+                            ESP35
+                        </td>
+                        <td class="marketdata-sell-price"></td>
+                        <td class="marketdata-buy-price"></td>
+                        <td class="marketdata-spread"></td>
+                        <td class="marketdata-change"></td>
+                        <td class="marketdata-high"></td>
+                        <td class="marketdata-low"></td>
+                        <td class="marketdata-roll-sell"></td>
+                        <td class="marketdata-roll-buy"></td>
+                        <td class="marketdata-pip-cost"></td>
+                        <td class="marketdata-margin"></td>
+                        <td class="marketdata-time"></td>
+                    </tr>
+                    <tr id="USDNOK">
+                        <td class="marketdata-symbol">
+                            USDNOK
+                        </td>
+                        <td class="marketdata-sell-price"></td>
+                        <td class="marketdata-buy-price"></td>
+                        <td class="marketdata-spread"></td>
+                        <td class="marketdata-change"></td>
+                        <td class="marketdata-high"></td>
+                        <td class="marketdata-low"></td>
+                        <td class="marketdata-roll-sell"></td>
+                        <td class="marketdata-roll-buy"></td>
+                        <td class="marketdata-pip-cost"></td>
+                        <td class="marketdata-margin"></td>
+                        <td class="marketdata-time"></td>
+                    </tr>
+                    <tr id="EURAUD">
+                        <td class="marketdata-symbol">
+                            EURAUD
+                        </td>
+                        <td class="marketdata-sell-price"></td>
+                        <td class="marketdata-buy-price"></td>
+                        <td class="marketdata-spread"></td>
+                        <td class="marketdata-change"></td>
+                        <td class="marketdata-high"></td>
+                        <td class="marketdata-low"></td>
+                        <td class="marketdata-roll-sell"></td>
+                        <td class="marketdata-roll-buy"></td>
+                        <td class="marketdata-pip-cost"></td>
+                        <td class="marketdata-margin"></td>
+                        <td class="marketdata-time"></td>
+                    </tr>
+                    <tr id="XAUUSD">
+                        <td class="marketdata-symbol">
+                            XAUUSD
+                        </td>
+                        <td class="marketdata-sell-price"></td>
+                        <td class="marketdata-buy-price"></td>
+                        <td class="marketdata-spread"></td>
+                        <td class="marketdata-change"></td>
+                        <td class="marketdata-high"></td>
+                        <td class="marketdata-low"></td>
+                        <td class="marketdata-roll-sell"></td>
+                        <td class="marketdata-roll-buy"></td>
+                        <td class="marketdata-pip-cost"></td>
+                        <td class="marketdata-margin"></td>
+                        <td class="marketdata-time"></td>
+                    </tr>
+                    <tr id="USDCAD">
+                        <td class="marketdata-symbol">
+                            USDCAD
+                        </td>
+                        <td class="marketdata-sell-price"></td>
+                        <td class="marketdata-buy-price"></td>
+                        <td class="marketdata-spread"></td>
+                        <td class="marketdata-change"></td>
+                        <td class="marketdata-high"></td>
+                        <td class="marketdata-low"></td>
+                        <td class="marketdata-roll-sell"></td>
+                        <td class="marketdata-roll-buy"></td>
+                        <td class="marketdata-pip-cost"></td>
+                        <td class="marketdata-margin"></td>
+                        <td class="marketdata-time"></td>
+                    </tr>
+                    <tr id="NZDUSD">
+                        <td class="marketdata-symbol">
+                            NZDUSD
+                        </td>
+                        <td class="marketdata-sell-price"></td>
+                        <td class="marketdata-buy-price"></td>
+                        <td class="marketdata-spread"></td>
+                        <td class="marketdata-change"></td>
+                        <td class="marketdata-high"></td>
+                        <td class="marketdata-low"></td>
+                        <td class="marketdata-roll-sell"></td>
+                        <td class="marketdata-roll-buy"></td>
+                        <td class="marketdata-pip-cost"></td>
+                        <td class="marketdata-margin"></td>
+                        <td class="marketdata-time"></td>
+                    </tr>
+                    <tr id="EURSEK">
+                        <td class="marketdata-symbol">
+                            EURSEK
+                        </td>
+                        <td class="marketdata-sell-price"></td>
+                        <td class="marketdata-buy-price"></td>
+                        <td class="marketdata-spread"></td>
+                        <td class="marketdata-change"></td>
+                        <td class="marketdata-high"></td>
+                        <td class="marketdata-low"></td>
+                        <td class="marketdata-roll-sell"></td>
+                        <td class="marketdata-roll-buy"></td>
+                        <td class="marketdata-pip-cost"></td>
+                        <td class="marketdata-margin"></td>
+                        <td class="marketdata-time"></td>
+                    </tr>
+                    <tr id="USDTRY">
+                        <td class="marketdata-symbol">
+                            USDTRY
+                        </td>
+                        <td class="marketdata-sell-price"></td>
+                        <td class="marketdata-buy-price"></td>
+                        <td class="marketdata-spread"></td>
+                        <td class="marketdata-change"></td>
+                        <td class="marketdata-high"></td>
+                        <td class="marketdata-low"></td>
+                        <td class="marketdata-roll-sell"></td>
+                        <td class="marketdata-roll-buy"></td>
+                        <td class="marketdata-pip-cost"></td>
+                        <td class="marketdata-margin"></td>
+                        <td class="marketdata-time"></td>
+                    </tr>
+                    <tr id="SPX500">
+                        <td class="marketdata-symbol">
+                            SPX500
+                        </td>
+                        <td class="marketdata-sell-price"></td>
+                        <td class="marketdata-buy-price"></td>
+                        <td class="marketdata-spread"></td>
+                        <td class="marketdata-change"></td>
+                        <td class="marketdata-high"></td>
+                        <td class="marketdata-low"></td>
+                        <td class="marketdata-roll-sell"></td>
+                        <td class="marketdata-roll-buy"></td>
+                        <td class="marketdata-pip-cost"></td>
+                        <td class="marketdata-margin"></td>
+                        <td class="marketdata-time"></td>
+                    </tr>
+                    <tr id="AUDCHF">
+                        <td class="marketdata-symbol">
+                            AUDCHF
+                        </td>
+                        <td class="marketdata-sell-price"></td>
+                        <td class="marketdata-buy-price"></td>
+                        <td class="marketdata-spread"></td>
+                        <td class="marketdata-change"></td>
+                        <td class="marketdata-high"></td>
+                        <td class="marketdata-low"></td>
+                        <td class="marketdata-roll-sell"></td>
+                        <td class="marketdata-roll-buy"></td>
+                        <td class="marketdata-pip-cost"></td>
+                        <td class="marketdata-margin"></td>
+                        <td class="marketdata-time"></td>
+                    </tr>
+                    <tr id="UK100">
+                        <td class="marketdata-symbol">
+                            UK100
+                        </td>
+                        <td class="marketdata-sell-price"></td>
+                        <td class="marketdata-buy-price"></td>
+                        <td class="marketdata-spread"></td>
+                        <td class="marketdata-change"></td>
+                        <td class="marketdata-high"></td>
+                        <td class="marketdata-low"></td>
+                        <td class="marketdata-roll-sell"></td>
+                        <td class="marketdata-roll-buy"></td>
+                        <td class="marketdata-pip-cost"></td>
+                        <td class="marketdata-margin"></td>
+                        <td class="marketdata-time"></td>
+                    </tr>
+                    <tr id="SOYF">
+                        <td class="marketdata-symbol">
+                            SOYF
+                        </td>
+                        <td class="marketdata-sell-price"></td>
+                        <td class="marketdata-buy-price"></td>
+                        <td class="marketdata-spread"></td>
+                        <td class="marketdata-change"></td>
+                        <td class="marketdata-high"></td>
+                        <td class="marketdata-low"></td>
+                        <td class="marketdata-roll-sell"></td>
+                        <td class="marketdata-roll-buy"></td>
+                        <td class="marketdata-pip-cost"></td>
+                        <td class="marketdata-margin"></td>
+                        <td class="marketdata-time"></td>
+                    </tr>
+                    <tr id="AUDNZD">
+                        <td class="marketdata-symbol">
+                            AUDNZD
+                        </td>
+                        <td class="marketdata-sell-price"></td>
+                        <td class="marketdata-buy-price"></td>
+                        <td class="marketdata-spread"></td>
+                        <td class="marketdata-change"></td>
+                        <td class="marketdata-high"></td>
+                        <td class="marketdata-low"></td>
+                        <td class="marketdata-roll-sell"></td>
+                        <td class="marketdata-roll-buy"></td>
+                        <td class="marketdata-pip-cost"></td>
+                        <td class="marketdata-margin"></td>
+                        <td class="marketdata-time"></td>
+                    </tr>
+                    <tr id="EURCAD">
+                        <td class="marketdata-symbol">
+                            EURCAD
+                        </td>
+                        <td class="marketdata-sell-price"></td>
+                        <td class="marketdata-buy-price"></td>
+                        <td class="marketdata-spread"></td>
+                        <td class="marketdata-change"></td>
+                        <td class="marketdata-high"></td>
+                        <td class="marketdata-low"></td>
+                        <td class="marketdata-roll-sell"></td>
+                        <td class="marketdata-roll-buy"></td>
+                        <td class="marketdata-pip-cost"></td>
+                        <td class="marketdata-margin"></td>
+                        <td class="marketdata-time"></td>
+                    </tr>
+                    <tr id="USDZAR">
+                        <td class="marketdata-symbol">
+                            USDZAR
+                        </td>
+                        <td class="marketdata-sell-price"></td>
+                        <td class="marketdata-buy-price"></td>
+                        <td class="marketdata-spread"></td>
+                        <td class="marketdata-change"></td>
+                        <td class="marketdata-high"></td>
+                        <td class="marketdata-low"></td>
+                        <td class="marketdata-roll-sell"></td>
+                        <td class="marketdata-roll-buy"></td>
+                        <td class="marketdata-pip-cost"></td>
+                        <td class="marketdata-margin"></td>
+                        <td class="marketdata-time"></td>
+                    </tr>
+                    <tr id="EURNOK">
+                        <td class="marketdata-symbol">
+                            EURNOK
+                        </td>
+                        <td class="marketdata-sell-price"></td>
+                        <td class="marketdata-buy-price"></td>
+                        <td class="marketdata-spread"></td>
+                        <td class="marketdata-change"></td>
+                        <td class="marketdata-high"></td>
+                        <td class="marketdata-low"></td>
+                        <td class="marketdata-roll-sell"></td>
+                        <td class="marketdata-roll-buy"></td>
+                        <td class="marketdata-pip-cost"></td>
+                        <td class="marketdata-margin"></td>
+                        <td class="marketdata-time"></td>
+                    </tr>
+                    <tr id="TRYJPY">
+                        <td class="marketdata-symbol">
+                            TRYJPY
+                        </td>
+                        <td class="marketdata-sell-price"></td>
+                        <td class="marketdata-buy-price"></td>
+                        <td class="marketdata-spread"></td>
+                        <td class="marketdata-change"></td>
+                        <td class="marketdata-high"></td>
+                        <td class="marketdata-low"></td>
+                        <td class="marketdata-roll-sell"></td>
+                        <td class="marketdata-roll-buy"></td>
+                        <td class="marketdata-pip-cost"></td>
+                        <td class="marketdata-margin"></td>
+                        <td class="marketdata-time"></td>
+                    </tr>
+                    <tr id="US30">
+                        <td class="marketdata-symbol">
+                            US30
+                        </td>
+                        <td class="marketdata-sell-price"></td>
+                        <td class="marketdata-buy-price"></td>
+                        <td class="marketdata-spread"></td>
+                        <td class="marketdata-change"></td>
+                        <td class="marketdata-high"></td>
+                        <td class="marketdata-low"></td>
+                        <td class="marketdata-roll-sell"></td>
+                        <td class="marketdata-roll-buy"></td>
+                        <td class="marketdata-pip-cost"></td>
+                        <td class="marketdata-margin"></td>
+                        <td class="marketdata-time"></td>
+                    </tr>
+                    <tr id="CHFJPY">
+                        <td class="marketdata-symbol">
+                            CHFJPY
+                        </td>
+                        <td class="marketdata-sell-price"></td>
+                        <td class="marketdata-buy-price"></td>
+                        <td class="marketdata-spread"></td>
+                        <td class="marketdata-change"></td>
+                        <td class="marketdata-high"></td>
+                        <td class="marketdata-low"></td>
+                        <td class="marketdata-roll-sell"></td>
+                        <td class="marketdata-roll-buy"></td>
+                        <td class="marketdata-pip-cost"></td>
+                        <td class="marketdata-margin"></td>
+                        <td class="marketdata-time"></td>
+                    </tr>
+                    <tr id="GBPCAD">
+                        <td class="marketdata-symbol">
+                            GBPCAD
+                        </td>
+                        <td class="marketdata-sell-price"></td>
+                        <td class="marketdata-buy-price"></td>
+                        <td class="marketdata-spread"></td>
+                        <td class="marketdata-change"></td>
+                        <td class="marketdata-high"></td>
+                        <td class="marketdata-low"></td>
+                        <td class="marketdata-roll-sell"></td>
+                        <td class="marketdata-roll-buy"></td>
+                        <td class="marketdata-pip-cost"></td>
+                        <td class="marketdata-margin"></td>
+                        <td class="marketdata-time"></td>
+                    </tr>
+                    <tr id="USDMXN">
+                        <td class="marketdata-symbol">
+                            USDMXN
+                        </td>
+                        <td class="marketdata-sell-price"></td>
+                        <td class="marketdata-buy-price"></td>
+                        <td class="marketdata-spread"></td>
+                        <td class="marketdata-change"></td>
+                        <td class="marketdata-high"></td>
+                        <td class="marketdata-low"></td>
+                        <td class="marketdata-roll-sell"></td>
+                        <td class="marketdata-roll-buy"></td>
+                        <td class="marketdata-pip-cost"></td>
+                        <td class="marketdata-margin"></td>
+                        <td class="marketdata-time"></td>
+                    </tr>
+                    <tr id="EURGBP">
+                        <td class="marketdata-symbol">
+                            EURGBP
+                        </td>
+                        <td class="marketdata-sell-price"></td>
+                        <td class="marketdata-buy-price"></td>
+                        <td class="marketdata-spread"></td>
+                        <td class="marketdata-change"></td>
+                        <td class="marketdata-high"></td>
+                        <td class="marketdata-low"></td>
+                        <td class="marketdata-roll-sell"></td>
+                        <td class="marketdata-roll-buy"></td>
+                        <td class="marketdata-pip-cost"></td>
+                        <td class="marketdata-margin"></td>
+                        <td class="marketdata-time"></td>
+                    </tr>
+                    <tr id="EURJPY">
+                        <td class="marketdata-symbol">
+                            EURJPY
+                        </td>
+                        <td class="marketdata-sell-price"></td>
+                        <td class="marketdata-buy-price"></td>
+                        <td class="marketdata-spread"></td>
+                        <td class="marketdata-change"></td>
+                        <td class="marketdata-high"></td>
+                        <td class="marketdata-low"></td>
+                        <td class="marketdata-roll-sell"></td>
+                        <td class="marketdata-roll-buy"></td>
+                        <td class="marketdata-pip-cost"></td>
+                        <td class="marketdata-margin"></td>
+                        <td class="marketdata-time"></td>
+                    </tr>
+                    <tr id="GBPCHF">
+                        <td class="marketdata-symbol">
+                            GBPCHF
+                        </td>
+                        <td class="marketdata-sell-price"></td>
+                        <td class="marketdata-buy-price"></td>
+                        <td class="marketdata-spread"></td>
+                        <td class="marketdata-change"></td>
+                        <td class="marketdata-high"></td>
+                        <td class="marketdata-low"></td>
+                        <td class="marketdata-roll-sell"></td>
+                        <td class="marketdata-roll-buy"></td>
+                        <td class="marketdata-pip-cost"></td>
+                        <td class="marketdata-margin"></td>
+                        <td class="marketdata-time"></td>
+                    </tr>
+                    <tr id="CADJPY">
+                        <td class="marketdata-symbol">
+                            CADJPY
+                        </td>
+                        <td class="marketdata-sell-price"></td>
+                        <td class="marketdata-buy-price"></td>
+                        <td class="marketdata-spread"></td>
+                        <td class="marketdata-change"></td>
+                        <td class="marketdata-high"></td>
+                        <td class="marketdata-low"></td>
+                        <td class="marketdata-roll-sell"></td>
+                        <td class="marketdata-roll-buy"></td>
+                        <td class="marketdata-pip-cost"></td>
+                        <td class="marketdata-margin"></td>
+                        <td class="marketdata-time"></td>
+                    </tr>
+                    <tr id="USDCHF">
+                        <td class="marketdata-symbol">
+                            USDCHF
+                        </td>
+                        <td class="marketdata-sell-price"></td>
+                        <td class="marketdata-buy-price"></td>
+                        <td class="marketdata-spread"></td>
+                        <td class="marketdata-change"></td>
+                        <td class="marketdata-high"></td>
+                        <td class="marketdata-low"></td>
+                        <td class="marketdata-roll-sell"></td>
+                        <td class="marketdata-roll-buy"></td>
+                        <td class="marketdata-pip-cost"></td>
+                        <td class="marketdata-margin"></td>
+                        <td class="marketdata-time"></td>
+                    </tr>
+                    <tr id="US2000">
+                        <td class="marketdata-symbol">
+                            US2000
+                        </td>
+                        <td class="marketdata-sell-price"></td>
+                        <td class="marketdata-buy-price"></td>
+                        <td class="marketdata-spread"></td>
+                        <td class="marketdata-change"></td>
+                        <td class="marketdata-high"></td>
+                        <td class="marketdata-low"></td>
+                        <td class="marketdata-roll-sell"></td>
+                        <td class="marketdata-roll-buy"></td>
+                        <td class="marketdata-pip-cost"></td>
+                        <td class="marketdata-margin"></td>
+                        <td class="marketdata-time"></td>
+                    </tr>
+                    <tr id="GBPNZD">
+                        <td class="marketdata-symbol">
+                            GBPNZD
+                        </td>
+                        <td class="marketdata-sell-price"></td>
+                        <td class="marketdata-buy-price"></td>
+                        <td class="marketdata-spread"></td>
+                        <td class="marketdata-change"></td>
+                        <td class="marketdata-high"></td>
+                        <td class="marketdata-low"></td>
+                        <td class="marketdata-roll-sell"></td>
+                        <td class="marketdata-roll-buy"></td>
+                        <td class="marketdata-pip-cost"></td>
+                        <td class="marketdata-margin"></td>
+                        <td class="marketdata-time"></td>
+                    </tr>
+                    <tr id="AUDUSD">
+                        <td class="marketdata-symbol">
+                            AUDUSD
+                        </td>
+                        <td class="marketdata-sell-price"></td>
+                        <td class="marketdata-buy-price"></td>
+                        <td class="marketdata-spread"></td>
+                        <td class="marketdata-change"></td>
+                        <td class="marketdata-high"></td>
+                        <td class="marketdata-low"></td>
+                        <td class="marketdata-roll-sell"></td>
+                        <td class="marketdata-roll-buy"></td>
+                        <td class="marketdata-pip-cost"></td>
+                        <td class="marketdata-margin"></td>
+                        <td class="marketdata-time"></td>
+                    </tr>
+                    <tr id="GBPAUD">
+                        <td class="marketdata-symbol">
+                            GBPAUD
+                        </td>
+                        <td class="marketdata-sell-price"></td>
+                        <td class="marketdata-buy-price"></td>
+                        <td class="marketdata-spread"></td>
+                        <td class="marketdata-change"></td>
+                        <td class="marketdata-high"></td>
+                        <td class="marketdata-low"></td>
+                        <td class="marketdata-roll-sell"></td>
+                        <td class="marketdata-roll-buy"></td>
+                        <td class="marketdata-pip-cost"></td>
+                        <td class="marketdata-margin"></td>
+                        <td class="marketdata-time"></td>
+                    </tr>
+                    <tr id="NZDJPY">
+                        <td class="marketdata-symbol">
+                            NZDJPY
+                        </td>
+                        <td class="marketdata-sell-price"></td>
+                        <td class="marketdata-buy-price"></td>
+                        <td class="marketdata-spread"></td>
+                        <td class="marketdata-change"></td>
+                        <td class="marketdata-high"></td>
+                        <td class="marketdata-low"></td>
+                        <td class="marketdata-roll-sell"></td>
+                        <td class="marketdata-roll-buy"></td>
+                        <td class="marketdata-pip-cost"></td>
+                        <td class="marketdata-margin"></td>
+                        <td class="marketdata-time"></td>
+                    </tr>
+                    <tr id="Bund">
+                        <td class="marketdata-symbol">
+                            Bund
+                        </td>
+                        <td class="marketdata-sell-price"></td>
+                        <td class="marketdata-buy-price"></td>
+                        <td class="marketdata-spread"></td>
+                        <td class="marketdata-change"></td>
+                        <td class="marketdata-high"></td>
+                        <td class="marketdata-low"></td>
+                        <td class="marketdata-roll-sell"></td>
+                        <td class="marketdata-roll-buy"></td>
+                        <td class="marketdata-pip-cost"></td>
+                        <td class="marketdata-margin"></td>
+                        <td class="marketdata-time"></td>
+                    </tr>
+                    <tr id="XAGUSD">
+                        <td class="marketdata-symbol">
+                            XAGUSD
+                        </td>
+                        <td class="marketdata-sell-price"></td>
+                        <td class="marketdata-buy-price"></td>
+                        <td class="marketdata-spread"></td>
+                        <td class="marketdata-change"></td>
+                        <td class="marketdata-high"></td>
+                        <td class="marketdata-low"></td>
+                        <td class="marketdata-roll-sell"></td>
+                        <td class="marketdata-roll-buy"></td>
+                        <td class="marketdata-pip-cost"></td>
+                        <td class="marketdata-margin"></td>
+                        <td class="marketdata-time"></td>
+                    </tr>
+                    <tr id="AUDJPY">
+                        <td class="marketdata-symbol">
+                            AUDJPY
+                        </td>
+                        <td class="marketdata-sell-price"></td>
+                        <td class="marketdata-buy-price"></td>
+                        <td class="marketdata-spread"></td>
+                        <td class="marketdata-change"></td>
+                        <td class="marketdata-high"></td>
+                        <td class="marketdata-low"></td>
+                        <td class="marketdata-roll-sell"></td>
+                        <td class="marketdata-roll-buy"></td>
+                        <td class="marketdata-pip-cost"></td>
+                        <td class="marketdata-margin"></td>
+                        <td class="marketdata-time"></td>
+                    </tr>
+                    <tr id="JPN225">
+                        <td class="marketdata-symbol">
+                            JPN225
+                        </td>
+                        <td class="marketdata-sell-price"></td>
+                        <td class="marketdata-buy-price"></td>
+                        <td class="marketdata-spread"></td>
+                        <td class="marketdata-change"></td>
+                        <td class="marketdata-high"></td>
+                        <td class="marketdata-low"></td>
+                        <td class="marketdata-roll-sell"></td>
+                        <td class="marketdata-roll-buy"></td>
+                        <td class="marketdata-pip-cost"></td>
+                        <td class="marketdata-margin"></td>
+                        <td class="marketdata-time"></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
+<script>
+    $(function () {
+        createConnect()
+        $("#marketdatas tr").click(function () {
+            var tr=$(this)
+            tr.css("background","rgba(230, 230, 230, 0.6)")
+            tr.siblings("tr").css("background","white")
+        })
+    })
+    var socket;
+
+    function uuid() {
+        var s = [];
+        var hexDigits = "0123456789abcdef";
+        for (var i = 0; i < 36; i++) {
+            s[i] = hexDigits.substr(Math.floor(Math.random() * 0x10), 1);
+        }
+        s[14] = "4";  // bits 12-15 of the time_hi_and_version field to 0010
+        s[19] = hexDigits.substr((s[19] & 0x3) | 0x8, 1);  // bits 6-7 of the clock_seq_hi_and_reserved to 01
+        s[8] = s[13] = s[18] = s[23] = "-";
+
+        var uuid = s.join("");
+        return uuid;
+    }
+
+    function createConnect() {
+        var socketId = uuid()
+
+        if (typeof (WebSocket) == "undefined") {
+            console.log("您的浏览器不支持WebSocket");
+        } else {
+            console.log("您的浏览器支持WebSocket");
+            //实现化WebSocket对象，指定要连接的服务器地址与端口  建立连接
+            //等同于socket = new WebSocket("ws://localhost:8083/checkcentersys/websocket/20");
+            socket = new WebSocket("ws://localhost:8080/websocket/" + socketId);
+            //打开事件
+            socket.onopen = function () {
+                console.log("Socket " + socketId + "已打开");
+                //socket.send("这是来自客户端的消息" + location.href + new Date());
+            };
+            //获得消息事件
+            socket.onmessage = function (msg) {
+                // console.log(msg.data)
+                var content = $.parseJSON(msg.data);
+                // console.log(content)
+                var symbol = content.instrument.symbol.replace("/", "");
+                var tr = $("#" + symbol);
+                var precision = content.instrument.fxcmsymPrecision;
+                var pointSize = content.instrument.fxcmsymPointSize;
+                var sellPrice = content.bidOpen.toFixed(precision);
+                var buyPrice = content.askOpen.toFixed(precision);
+                var spread = ((buyPrice - sellPrice) / pointSize).toFixed(2);
+                var high = content.high.toFixed(precision);
+                var low = content.low.toFixed(precision);
+                var rollBuy = content.instrument.fxcmsymInterestBuy;
+                var rollSell = content.instrument.fxcmsymInterestSell;
+                var time = new Date(content.makingTime).toLocaleString()
+                var preSellPrice = tr.children(".marketdata-sell-price").html()
+                var preBuyPrice = tr.children(".marketdata-buy-price").html()
+
+                console.log(preSellPrice)
+
+                //设置背景颜色
+                if (preSellPrice < sellPrice) {
+                    tr.children(".marketdata-sell-price").css(
+                        {
+                            "background-color": "white",
+                            "color": "#d22249",
+                            "transition-delay": "0s",
+                            "transition-duration": "0s"
+                        })
+                } else if (preSellPrice > sellPrice) {
+                    tr.children(".marketdata-sell-price").css(
+                        {
+                            "background-color": "#4982d1",
+                            "color": "white",
+                            "transition-delay": "0s",
+                            "transition-duration": "0s"
+                        }
+                    )
+                } else {
+                    tr.children(".marketdata-sell-price").css(
+                        {
+                            "background-color": "white",
+                            "color": "black",
+                            "transition-delay": "2s",
+                            "transition-duration": "0.2s"
+                        })
+
+                }
+
+
+                if (preBuyPrice < buyPrice) {
+                    tr.children(".marketdata-buy-price").css(
+                        {
+                            "background-color": "#d22249",
+                            "color": "white",
+                            "transition-delay": "0s",
+                            "transition-duration": "0s"
+                        }
+                    )
+                } else if (preBuyPrice > buyPrice) {
+                    tr.children(".marketdata-buy-price").css(
+                        {
+                            "background-color": "#4982d1",
+                            "color": "white",
+                            "transition-delay": "0s",
+                            "transition-duration": "0s"
+                        }
+                    )
+                } else {
+                    tr.children(".marketdata-buy-price").css(
+                        {
+                            "background-color": "white",
+                            "color": "black",
+                            "transition-delay": "2s",
+                            "transition-duration": "0.2s"
+                        })
+
+                }
+
+                tr.children(".marketdata-sell-price").html(sellPrice)
+                tr.children(".marketdata-buy-price").html(buyPrice)
+                tr.children(".marketdata-spread").html(spread)
+                tr.children(".marketdata-change").html()
+                tr.children(".marketdata-high").html(high)
+                tr.children(".marketdata-low").html(low)
+                tr.children(".marketdata-roll-sell").html(rollSell)
+                tr.children(".marketdata-roll-buy").html(rollBuy)
+                tr.children(".marketdata-pip-cost").html()
+                tr.children(".marketdata-margin").html()
+                tr.children(".marketdata-time").html(time)
+
+
+            };
+            //关闭事件
+            socket.onclose = function () {
+                console.log("Socket已关闭");
+            };
+            //发生了错误事件
+            socket.onerror = function () {
+                alert("Socket发生了错误");
+                //此时可以尝试刷新页面
+            }
+
+        }
+    }
+</script>

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>
+        欢迎登录</title>
+    <script src="/js/jquery-3.4.1.js"></script>
+    <link rel="stylesheet" type="text/css" href="/bootstrap-3.3.7-dist/css/bootstrap.css">
+
+    <style>
+        body {
+            position: relative;
+            margin: 0px;
+        }
+        span{
+            margin-left: -5%;
+            cursor: pointer;
+        }
+        button{
+            font-size: 12px;
+            font-weight: bolder;
+        }
+
+        #background-div {
+            position: absolute;
+            left: 0px;
+            top: 0px;
+            width: 100%;
+            height: 100%;
+            opacity: 0.8;
+            background-repeat: no-repeat;
+            z-index: -1;
+            background-size: 100% 100%;
+            background-image: url("/img/yunhe.jpg");
+        }
+
+        #user-login-box {
+            padding: 6%;
+            text-align: center;
+        }
+        input{
+            border-radius: 1px;
+            box-shadow: rgba(0, 0, 0, 0.24) 3px 3px 3px;
+        }
+        .to-register-page{
+            text-shadow: 2px 2px 10px;
+        }
+
+
+        /*.cancle-user-login-btn{*/
+            /*color: #495aff;*/
+        /*}*/
+        /*.confirm-user-login-btn{*/
+            /*color: #ff0b0b;*/
+        /*}*/
+    </style>
+</head>
+<body>
+<div id="background-div"></div>
+<div id="user-login-box">
+    <p class="user-login-box-msg">
+        欢迎登录</p>
+    用户名：<input
+        class="username"
+        placeholder="请输入用户名">
+    <br/>
+    <br/>
+    密&nbsp&nbsp&nbsp&nbsp码：<input
+        class="password"
+        type="password"
+        placeholder="请输入密码">
+    <br/>
+    <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <button class="cancle-user-login-btn button button-glow button-rounded button-border button-tiny">
+        取消
+    </button>
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    <button class="confirm-user-login-btn  button button-glow button-rounded button-raised button-tiny">
+        登录
+    </button>
+
+</div>
+<div id="my-data" style="display: none"></div>
+</body>
+</html>
+<script>
+    $(function () {
+        $("#user-login-box .cancle-user-login-btn").click(gotoHomePage)
+        $("#user-login-box .confirm-user-login-btn").click(doUserLogin)
+        $("#user-login-box .to-register-page").click(toRegisterPage)
+        $('body').height($(window).height());
+    })
+
+    function doUserLogin() {
+       $("#user-login-box").load("/socket/index")
+       localStorage.setItem("userToken",$("#user-login-box .username").val());
+    }
+
+    function toRegisterPage() {
+        location.href = "/user/registerPage.do?t=" + Math.random();
+    }
+
+    function gotoHomePage() {
+        location.href = "/index.do?t=" + Math.random();
+    }
+</script>
