@@ -7,6 +7,9 @@
 
 package com.duochuang.controller;
 
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -15,10 +18,11 @@ import javax.websocket.*;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 import java.io.IOException;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.concurrent.CopyOnWriteArraySet;
 
-@ServerEndpoint(("/websocket/{sid}"))
+@ServerEndpoint(value = "/websocket/{sid}")
 @Component
 public class WebSocketServer {
     static Logger log= LoggerFactory.getLogger(WebSocketServer.class);
@@ -50,6 +54,8 @@ public class WebSocketServer {
         }
     }
 
+
+
     /**
      * 连接关闭调用的方法
      */
@@ -67,7 +73,17 @@ public class WebSocketServer {
      */
     @OnMessage
     public void onMessage(String message, Session session) {
-        log.info("收到来自窗口" + sid + "的信息:" + message);
+        try {
+            LinkedHashMap linkedHashMap = new ObjectMapper().readValue(message, LinkedHashMap.class);
+            System.out.println(linkedHashMap);
+        } catch (JsonParseException e) {
+            e.printStackTrace();
+        } catch (JsonMappingException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        System.out.println("收到来自窗口" + sid + "的信息:" + message);
         //群发消息
         for (WebSocketServer item : webSocketSet) {
             try {

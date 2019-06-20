@@ -3,7 +3,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>
-        hello</title>
+        TRADE</title>
     <meta http-equiv="Content-Type"
           content="text/html; charset=UTF-8"/>
     <link rel="stylesheet"
@@ -12,9 +12,10 @@
     <script src="/js/jquery-3.4.1.js"></script>
 
     <style>
-        #marketdatas{
+        #marketdatas {
             border-spacing: 2px 5px;
         }
+
         #marketdatas th, td {
             text-align: center;
             padding: 2px 5px;
@@ -26,12 +27,16 @@
         #marketdatas tr:hover {
             background: rgba(230, 230, 230, 0.6);
         }
+        #marketdatas{
+            overflow:scroll;
+            height: 500px;
+        }
     </style>
 </head>
 <body>
-<div class="container-fluid">
+<div class="container-fluid" id="main-data">
     <div class="row">
-        <div class="col-lg-12">
+        <div class="col-lg-6">
             <div class="row">
                 <table id="marketdatas">
                     <tr>
@@ -1011,13 +1016,8 @@
 <script>
     $(function () {
         createConnect()
-        $("#marketdatas tr").click(function () {
-            var tr=$(this)
-            tr.css("background","rgba(230, 230, 230, 0.6)")
-            tr.siblings("tr").css("background","white")
-        })
+        $("#marketdatas tr").click(sendMessage)
     })
-    var socket;
 
     function uuid() {
         var s = [];
@@ -1032,6 +1032,23 @@
         var uuid = s.join("");
         return uuid;
     }
+
+    var socket;
+
+    function sendMessage() {
+        var tr = $(this)
+        tr.css("background", "rgba(230, 230, 230, 0.6)")
+        tr.siblings("tr").css("background", "white")
+        var param={
+            "url":"123213",
+            "account":"asdfasdf",
+            "amount":new Date().toLocaleString()
+        }
+        var msg=JSON.stringify(param)
+        console.log(msg)
+        socket.send(msg)
+    }
+
 
     function createConnect() {
         var socketId = uuid()
@@ -1050,9 +1067,8 @@
             };
             //获得消息事件
             socket.onmessage = function (msg) {
-                // console.log(msg.data)
+
                 var content = $.parseJSON(msg.data);
-                // console.log(content)
                 var symbol = content.instrument.symbol.replace("/", "");
                 var tr = $("#" + symbol);
                 var precision = content.instrument.fxcmsymPrecision;
@@ -1067,67 +1083,100 @@
                 var time = new Date(content.makingTime).toLocaleString()
                 var preSellPrice = tr.children(".marketdata-sell-price").html()
                 var preBuyPrice = tr.children(".marketdata-buy-price").html()
-
-                console.log(preSellPrice)
+                var buyTimeOutDataId=tr.attr("id")+"buyTimeOutId";
+                var sellTimeOutDataId=tr.attr("id")+"sellTimeOutId";
 
                 //设置背景颜色
                 if (preSellPrice < sellPrice) {
                     tr.children(".marketdata-sell-price").css(
                         {
-                            "background-color": "#d22249",
-                            "color": "white",
-                            "transition-delay": "0s",
-                            "transition-duration": "0.5s"
-                        })
-                } else if (preSellPrice > sellPrice) {
-                    tr.children(".marketdata-sell-price").css(
-                        {
                             "background-color": "#4982d1",
                             "color": "white",
                             "transition-delay": "0s",
-                            "transition-duration": "0.5s"
-                        }
-                    )
-                } else {
+                            "transition-duration": "0s"
+                        })
+                    var timeOutId=$("#main-data").data(sellTimeOutDataId)
+                    clearTimeout(timeOutId)
+                    var timeOut=setTimeout(function () {
+                        tr.children(".marketdata-sell-price").css(
+                            {
+                                "background-color": "white",
+                                "color": "black",
+                                "transition-duration": "0.3s"
+                            })
+                    },1200)
+                    $("#main-data").data(sellTimeOutDataId,timeOut)
+
+                } else if (preSellPrice > sellPrice) {
                     tr.children(".marketdata-sell-price").css(
                         {
-                            "background-color": "white",
-                            "color": "black",
-                            "transition-delay": "0.5s",
-                            "transition-duration": "0.2s"
-                        })
+                            "background-color": "#d22249",
+                            "color": "white",
+                            "transition-delay": "0s",
+                            "transition-duration": "0s"
+                        }
+                    )
 
+                    var timeOutId=$("#main-data").data(sellTimeOutDataId)
+                    clearTimeout(timeOutId)
+                    var timeOut=setTimeout(function () {
+                        tr.children(".marketdata-sell-price").css(
+                            {
+                                "background-color": "white",
+                                "color": "black",
+                                "transition-duration": "0.3s"
+                            })
+                    },1200)
+                    $("#main-data").data(sellTimeOutDataId,timeOut)
                 }
+
 
 
                 if (preBuyPrice < buyPrice) {
                     tr.children(".marketdata-buy-price").css(
                         {
-                            "background-color": "#d22249",
-                            "color": "white",
-                            "transition-delay": "0s",
-                            "transition-duration": "0.5s"
-                        }
-                    )
-                } else if (preBuyPrice > buyPrice) {
-                    tr.children(".marketdata-buy-price").css(
-                        {
                             "background-color": "#4982d1",
                             "color": "white",
                             "transition-delay": "0s",
-                            "transition-duration": "0.5s"
+                            "transition-duration": "0s"
                         }
                     )
-                } else {
+
+
+                    var timeOutId=$("#main-data").data(buyTimeOutDataId)
+                    clearTimeout(timeOutId)
+                    var timeOut=setTimeout(function () {
+                        tr.children(".marketdata-buy-price").css(
+                            {
+                                "background-color": "white",
+                                "color": "black",
+                                "transition-duration": "0.3s"
+                            })
+                    },1200)
+                    $("#main-data").data(buyTimeOutDataId,timeOut)
+
+                } else if (preBuyPrice > buyPrice) {
                     tr.children(".marketdata-buy-price").css(
                         {
-                            "background-color": "white",
-                            "color": "black",
-                            "transition-delay": "0.5s",
-                            "transition-duration": "0.2s"
-                        })
-
+                            "background-color": "#d22249",
+                            "color": "white",
+                            "transition-delay": "0s",
+                            "transition-duration": "0s"
+                        }
+                    )
+                    var timeOutId=$("#main-data").data(buyTimeOutDataId)
+                    clearTimeout(timeOutId)
+                    var timeOut=setTimeout(function () {
+                        tr.children(".marketdata-buy-price").css(
+                            {
+                                "background-color": "white",
+                                "color": "black",
+                                "transition-duration": "0.3s"
+                            })
+                    },1200)
+                    $("#main-data").data(buyTimeOutDataId,timeOut)
                 }
+
 
                 tr.children(".marketdata-sell-price").html(sellPrice)
                 tr.children(".marketdata-buy-price").html(buyPrice)

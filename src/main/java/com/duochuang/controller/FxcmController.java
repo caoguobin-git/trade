@@ -31,18 +31,7 @@ public class FxcmController {
                 try {
                     ObjectMapper objectMapper=new ObjectMapper();
                     String sb = objectMapper.writeValueAsString(marketDataSnapshot);
-
-
-//                    StringBuffer sb=new StringBuffer();
-//                    String symbol=marketDataSnapshot.getInstrument().getSymbol();
-//                    double low = marketDataSnapshot.getLow();
-//                    double high = marketDataSnapshot.getHigh();
-//                    sb.append("{" +
-//                            "\"symbol\": \""+symbol+"\"," +
-//                            "\"low\": "+low+"," +
-//                            "\"high\": "+high+"" +
-//                            "}");
-                    WebSocketServer.sendInfo(sb.toString(), null);
+                    WebSocketServer.sendInfo(sb, null);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
