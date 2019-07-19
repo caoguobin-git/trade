@@ -42,7 +42,7 @@ public class FxcmController {
         iGateway.registerStatusMessageListener(iStatus->{
 
         });
-        FXCMLoginProperties properties=new FXCMLoginProperties("701116547", "890128", "Demo", "http://www.fxcorporate.com/Hosts.jsp");
+        FXCMLoginProperties properties=new FXCMLoginProperties("701172924", "7723", "Demo", "http://www.fxcorporate.com/Hosts.jsp");
 
 
         try {

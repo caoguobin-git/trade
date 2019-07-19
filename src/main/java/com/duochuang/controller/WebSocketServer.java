@@ -7,6 +7,8 @@
 
 package com.duochuang.controller;
 
+import com.duochuang.common.trade.FXCMInfoEntity;
+import com.duochuang.common.trade.TradeThread;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -34,8 +36,11 @@ public class WebSocketServer {
     //与某个客户端的连接会话，需要通过它来给客户端发送数据
     private Session session;
 
+    private ObjectMapper objectMapper=new ObjectMapper();
+
     //接收sid
     private String sid = "";
+    private TradeThread tradeThread;
 
     /**
      * 连接建立成功调用的方法
@@ -47,8 +52,10 @@ public class WebSocketServer {
         addOnlineCount();           //在线数加1
         log.info("有新窗口开始监听:" + sid + ",当前在线人数为" + getOnlineCount());
         this.sid = sid;
+        FXCMInfoEntity fxcmInfoEntity=new FXCMInfoEntity("701116547","890128","Demo","http://www.fxcorporate.com/Hosts.jsp");
+        tradeThread = new TradeThread(fxcmInfoEntity);
         try {
-            sendMessage("连接成功");
+            sendMessage("websocket连接成功");
         } catch (IOException e) {
             log.error("websocket IO异常");
         }
@@ -73,6 +80,31 @@ public class WebSocketServer {
      */
     @OnMessage
     public void onMessage(String message, Session session) {
+        if ("login".equals(message)){
+            tradeThread.startTradeSession();
+            return;
+        }else if ("open".equals(message)){
+            try {
+                System.out.println("get open map");
+                String msg = objectMapper.writeValueAsString(tradeThread.getOpenPositionsMap());
+                System.out.println(msg);
+                sendMessage(msg);
+                return;
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }else if ("logout".equals(message)){
+            System.out.println("logout");
+            tradeThread.logout();
+            try {
+                sendMessage("退出福汇");
+                session.close();
+                this.onClose();
+                return;
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
         try {
             LinkedHashMap linkedHashMap = new ObjectMapper().readValue(message, LinkedHashMap.class);
             System.out.println(linkedHashMap);
@@ -84,14 +116,15 @@ public class WebSocketServer {
             e.printStackTrace();
         }
         System.out.println("收到来自窗口" + sid + "的信息:" + message);
+
         //群发消息
-        for (WebSocketServer item : webSocketSet) {
-            try {
-                item.sendMessage(message);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+//        for (WebSocketServer item : webSocketSet) {
+//            try {
+//                item.sendMessage(message);
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
     }
 
     /**
@@ -131,6 +164,7 @@ public class WebSocketServer {
                 if (sid == null) {
                     item.sendMessage(message);
                 } else if (item.sid.equals(sid)) {
+//                    item.tradeThread.createTrueMarketOrder()
                     item.sendMessage(message);
                 }
             } catch (IOException e) {
